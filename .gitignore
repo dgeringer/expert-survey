@@ -1,0 +1,17 @@
+# Compiled output
+/dist
+/out-tsc
+/tmp
+
+# Dependencies
+/node_modules
+
+# Angular cache
+/.angular/cache
+
+# Misc
+/.vscode
+npm-debug.log
+yarn-error.log
+.DS_Store
+Thumbs.db

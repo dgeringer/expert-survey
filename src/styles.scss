@@ -1,0 +1,133 @@
+/* =========================================================================
+   Globale Styles & Design-Tokens
+   Dezente, seriose Palette: Blau-Akzent auf Anthrazit/Grau.
+   ========================================================================= */
+
+:root {
+  /* Flaechen */
+  --color-bg: #f4f6fa;
+  --color-surface: #ffffff;
+  --color-surface-muted: #f1f4f9;
+
+  /* Text */
+  --color-text: #1c2536;
+  --color-text-muted: #5b6679;
+
+  /* Akzent (Blau) */
+  --color-accent: #2563eb;
+  --color-accent-strong: #1d4ed8;
+  --color-accent-soft: #e6effe;
+
+  /* Erfolg (abgeschlossene Karte) */
+  --color-success: #16a34a;
+  --color-success-strong: #15803d;
+  --color-success-soft: #e4f7ec;
+
+  /* Linien & Fokus */
+  --color-border: #dce1ea;
+  --color-error: #d92d20;
+  --color-error-soft: #fdecea;
+  --color-focus: #93c5fd;
+
+  /* Radien */
+  --radius-sm: 8px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 22px;
+
+  /* Schatten */
+  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.06), 0 1px 3px rgba(15, 23, 42, 0.05);
+  --shadow-md: 0 8px 24px rgba(15, 23, 42, 0.1);
+  --shadow-lg: 0 24px 60px rgba(13, 27, 62, 0.28);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  color: var(--color-text);
+  background: radial-gradient(circle at top, #eef2fb 0%, var(--color-bg) 60%);
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.5;
+}
+
+/* =========================================================================
+   Gemeinsame Formularfeld-Styles (von Header und App-Karte genutzt)
+   ========================================================================= */
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.field__label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.field__required {
+  color: var(--color-error);
+}
+
+.field__optional {
+  font-weight: 400;
+  color: var(--color-text-muted);
+}
+
+.field__input {
+  width: 100%;
+  padding: 0.7rem 0.85rem;
+  font-size: 0.95rem;
+  font-family: inherit;
+  color: var(--color-text);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.field__input::placeholder {
+  color: #9aa4b6;
+}
+
+.field__input:hover {
+  border-color: #c2cad8;
+}
+
+.field__input:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px var(--color-accent-soft);
+}
+
+.field__input[aria-invalid='true'] {
+  border-color: var(--color-error);
+}
+
+.field__textarea {
+  resize: vertical;
+  min-height: 4.5rem;
+}
+
+.field__select {
+  cursor: pointer;
+}
+
+.field__error {
+  margin: 0;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--color-error);
+}

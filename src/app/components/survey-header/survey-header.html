@@ -1,0 +1,75 @@
+<header class="header">
+  <!-- Akademisches Impressum / Hero -->
+  <div class="hero">
+    <div class="hero__glow" aria-hidden="true"></div>
+
+    <div class="hero__top">
+      <span class="hero__badge">{{ thesis.type }}</span>
+      <span class="hero__org">{{ thesis.institution }} &middot; {{ thesis.company }}</span>
+    </div>
+
+    <p class="hero__eyebrow">Wissenschaftliche Expertenbefragung</p>
+    <h1 class="hero__title">{{ thesis.title }}</h1>
+
+    <dl class="hero__meta">
+      <div class="hero__meta-item">
+        <dt>Im Rahmen der {{ thesis.type }}</dt>
+        <dd>&bdquo;{{ thesis.thesisTitle }}&ldquo;</dd>
+      </div>
+      <div class="hero__meta-item">
+        <dt>Autor</dt>
+        <dd>{{ thesis.author }}</dd>
+      </div>
+    </dl>
+  </div>
+
+  <!-- Einleitung & Aufgabe -->
+  <div class="intro">
+    <section class="intro__block">
+      <h2 class="intro__heading">Worum geht es?</h2>
+      <p>
+        Fuer die Auswahl eines Frontend-Frameworks werden sieben Bewertungskriterien
+        herangezogen. Wie wichtig jedes Kriterium ist, haengt vom konkreten
+        Anwendungsfall ab. Ihre fachliche Einschaetzung dieser Gewichtung ist
+        Gegenstand dieser Befragung.
+      </p>
+    </section>
+
+    <section class="intro__block">
+      <h2 class="intro__heading">Ihre Aufgabe</h2>
+      <p>
+        Sie bewerten vier Anwendungsfaelle getrennt. Verteilen Sie je Anwendungsfall
+        genau <strong>100 Punkte</strong> auf die sieben Kriterien &ndash; je mehr Punkte,
+        desto wichtiger das Kriterium fuer diesen Fall. Die Punkte muessen ganzzahlig
+        sein; <strong>0 Punkte</strong> sind erlaubt, wenn ein Kriterium fuer den
+        jeweiligen Fall keine Rolle spielt.
+      </p>
+    </section>
+  </div>
+
+  <!-- Pflichtfeld Name/Rolle -->
+  <div class="field header__field">
+    <label class="field__label" for="expertName">
+      Name / Rolle des Experten <span class="field__required" aria-hidden="true">*</span>
+    </label>
+    <input
+      id="expertName"
+      type="text"
+      class="field__input"
+      [formControl]="nameControl()"
+      placeholder="z. B. Dr. Maria Muster, Logistikleitung"
+      autocomplete="name"
+      required
+      aria-required="true"
+      [attr.aria-invalid]="nameControl().invalid && nameControl().touched"
+      [attr.aria-describedby]="
+        nameControl().invalid && nameControl().touched ? 'expertName-error' : null
+      "
+    />
+    @if (nameControl().invalid && nameControl().touched) {
+      <p id="expertName-error" class="field__error" role="alert">
+        Bitte geben Sie Ihren Namen oder Ihre Rolle an.
+      </p>
+    }
+  </div>
+</header>

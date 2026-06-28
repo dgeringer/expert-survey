@@ -1,0 +1,104 @@
+<article
+  class="card"
+  [class.card--complete]="isComplete"
+  [class.card--over]="isOver"
+  [formGroup]="form()"
+  [attr.aria-label]="'Gewichtung: ' + app().title"
+>
+  <header class="card__head">
+    <div class="card__badge" aria-hidden="true">{{ index() }}</div>
+    <div class="card__titles">
+      <h2 class="card__title">{{ app().title }}</h2>
+      <p class="card__subtitle">{{ app().subtitle }}</p>
+    </div>
+
+    <!-- Live-Statuschip: Summe / 100 -->
+    <span
+      class="chip"
+      [class.chip--ok]="isComplete"
+      [class.chip--over]="isOver"
+      role="status"
+      [attr.aria-label]="'Summe ' + total + ' von ' + target + ' Punkten'"
+    >
+      @if (isComplete) {
+        <span class="chip__icon" aria-hidden="true">&#10003;</span>
+      }
+      {{ total }} / {{ target }}
+    </span>
+  </header>
+
+  <p class="card__description">{{ app().description }}</p>
+
+  <!-- Kriterien: je Zeile ein Punkte-Eingabefeld + Anteilsbalken -->
+  <div class="weights" formGroupName="weights">
+    @for (criterion of criteria(); track trackByCriterion($index, criterion)) {
+      <div class="weight">
+        <div class="weight__info">
+          <label class="weight__name" [attr.for]="app().id + '-' + criterion.id">
+            {{ criterion.name }}
+          </label>
+          <p class="weight__desc">{{ criterion.description }}</p>
+          @if (criterion.scaleHint) {
+            <ul class="weight__scale">
+              @for (anchor of criterion.scaleHint.split(' · '); track $index) {
+                <li>{{ anchor }}</li>
+              }
+            </ul>
+          }
+        </div>
+
+        <div class="weight__control">
+          <input
+            [id]="app().id + '-' + criterion.id"
+            type="number"
+            class="weight__input"
+            [formControlName]="criterion.id"
+            min="0"
+            max="100"
+            step="1"
+            inputmode="numeric"
+            [attr.aria-label]="criterion.name + ' Punkte (0 bis 100)'"
+          />
+          <span class="weight__unit" aria-hidden="true">Pkt</span>
+        </div>
+
+        <div class="weight__bar" aria-hidden="true">
+          <div class="weight__fill" [style.width.%]="share(criterion.id)"></div>
+        </div>
+      </div>
+    }
+  </div>
+
+  <!-- Summen-/Restpunkte-Leiste -->
+  <div class="summary" [class.summary--ok]="isComplete" [class.summary--over]="isOver">
+    <div class="summary__bar" aria-hidden="true">
+      <div class="summary__fill" [style.width.%]="total > target ? 100 : total"></div>
+    </div>
+    <p class="summary__text">
+      @if (isComplete) {
+        <span class="summary__msg">Genau 100 Punkte vergeben &ndash; vollstaendig.</span>
+      } @else if (isOver) {
+        <span class="summary__msg">
+          {{ total - target }} Punkte zu viel &ndash; bitte reduzieren.
+        </span>
+      } @else {
+        <span class="summary__msg">Noch {{ remaining }} Punkte zu vergeben.</span>
+      }
+      <span class="summary__count">{{ total }} / {{ target }}</span>
+    </p>
+  </div>
+
+  <!-- Optionale Begruendung je Anwendungsfall -->
+  <div class="field">
+    <label class="field__label" [attr.for]="app().id + '-justification'">
+      Begruendung der Schwerpunktsetzung <span class="field__optional"></span>
+    </label>
+    <textarea
+      [id]="app().id + '-justification'"
+      class="field__input field__textarea"
+      formControlName="justification"
+      rows="2"
+      placeholder="Warum haben Sie die Punkte fuer diesen Anwendungsfall so verteilt?"
+    ></textarea>
+  </div>
+</article>

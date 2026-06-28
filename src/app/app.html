@@ -1,0 +1,104 @@
+<main class="page">
+  <div class="container">
+    <!-- Kopfbereich mit Titel, Einleitung und Namensfeld -->
+    <app-survey-header [nameControl]="expertNameControl" />
+
+    <!-- Fortschrittsbalken -->
+    <div class="page__progress">
+      <app-progress-bar [completed]="completedCount()" [total]="totalApps" />
+    </div>
+
+    <!-- Bewertungs-Formular -->
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+      <div class="page__cards">
+        @for (app of apps; track app.id; let i = $index) {
+          <app-app-card
+            [app]="app"
+            [index]="i + 1"
+            [criteria]="criteria"
+            [form]="weightingAt(i)"
+          />
+        }
+      </div>
+
+      <!-- Pflicht-Gesamtbegruendung -->
+      <section class="overall" aria-label="Gesamtbegruendung">
+        <div class="field">
+          <label class="field__label" for="overallJustification">
+            Begruendung Ihrer Schwerpunktsetzung
+            <span class="field__required" aria-hidden="true">*</span>
+          </label>
+          <p class="overall__hint">
+            Bitte begruenden Sie kurz (1&ndash;3 Saetze), warum Sie die Gewichte so
+            gesetzt haben. 
+          </p>
+          <textarea
+            id="overallJustification"
+            class="field__input field__textarea"
+            [formControl]="overallJustificationControl"
+            rows="4"
+            placeholder="Welche Ueberlegungen lagen Ihrer Punkteverteilung insgesamt zugrunde?"
+            required
+            aria-required="true"
+            [attr.aria-invalid]="
+              overallJustificationControl.invalid && overallJustificationControl.touched
+            "
+            [attr.aria-describedby]="
+              overallJustificationControl.invalid && overallJustificationControl.touched
+                ? 'overallJustification-error'
+                : null
+            "
+          ></textarea>
+          @if (overallJustificationControl.invalid && overallJustificationControl.touched) {
+            <p id="overallJustification-error" class="field__error" role="alert">
+              Bitte begruenden Sie Ihre Schwerpunktsetzung (mindestens 10 Zeichen).
+            </p>
+          }
+        </div>
+      </section>
+
+      <!-- Aktionsleiste -->
+      <section class="actions" aria-label="Aktionen">
+        @if (statusMessage()) {
+          <p class="actions__status" role="status">{{ statusMessage() }}</p>
+        }
+
+        @if (!canSubmit()) {
+          <p class="actions__hint">
+            Verteilen Sie je Anwendungsfall genau 100 Punkte, geben Sie Ihren Namen an
+            und begruenden Sie Ihre Schwerpunktsetzung, um die Befragung abzuschliessen.
+          </p>
+        }
+
+        <div class="actions__buttons">
+          <button
+            type="submit"
+            class="btn btn--primary"
+            [disabled]="!canSubmit() || isSending() || sendSuccess()"
+            [attr.aria-disabled]="!canSubmit() || isSending() || sendSuccess()"
+          >
+            @if (isSending()) {
+              <span class="btn__spinner" aria-hidden="true"></span>
+              Wird gesendet…
+            } @else if (sendSuccess()) {
+              &#10003;&nbsp;Gesendet
+            } @else {
+              Senden
+            }
+          </button>
+        </div>
+      </section>
+    </form>
+
+    <footer class="page__footer">
+      <p>
+        {{ thesis.type }} &bdquo;{{ thesis.thesisTitle }}&ldquo; &middot;
+        {{ thesis.author }} &middot; {{ thesis.institution }}
+      </p>
+      <p>
+        Diese Anwendung laeuft vollstaendig lokal in Ihrem Browser. Die Antworten werden
+        per <strong>EmailJS</strong> direkt verschickt &ndash; kein Mailprogramm noetig.
+      </p>
+    </footer>
+  </div>
+</main>

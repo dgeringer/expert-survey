@@ -1,0 +1,17 @@
+<section class="progress" aria-label="Fortschritt der Bewertung">
+  <div class="progress__head">
+    <span class="progress__label">Vollstaendig gewichtet (Summe = 100)</span>
+    <span class="progress__count">{{ completed() }} von {{ total() }} Apps</span>
+  </div>
+
+  <div
+    class="progress__track"
+    role="progressbar"
+    [attr.aria-valuenow]="percent()"
+    aria-valuemin="0"
+    aria-valuemax="100"
+    [attr.aria-label]="percent() + ' Prozent abgeschlossen'"
+  >
+    <div class="progress__fill" [style.width.%]="percent()"></div>
+  </div>
+</section>
