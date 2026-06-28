@@ -37,13 +37,15 @@
           <label class="weight__name" [attr.for]="app().id + '-' + criterion.id">
             {{ criterion.name }}
           </label>
-          <p class="weight__desc">{{ criterion.description }}</p>
-          @if (criterion.scaleHint) {
-            <ul class="weight__scale">
-              @for (anchor of criterion.scaleHint.split(' · '); track $index) {
-                <li>{{ anchor }}</li>
-              }
-            </ul>
+          @if (index() === 1) {
+            <p class="weight__desc">{{ criterion.description }}</p>
+            @if (criterion.scaleHint) {
+              <ul class="weight__scale">
+                @for (anchor of criterion.scaleHint.split(' · '); track $index) {
+                  <li>{{ anchor }}</li>
+                }
+              </ul>
+            }
           }
         </div>
 
@@ -60,6 +62,20 @@
             [attr.aria-label]="criterion.name + ' Punkte (0 bis 100)'"
           />
           <span class="weight__unit" aria-hidden="true">Pkt</span>
+          <span
+            class="weight__remaining"
+            [class.weight__remaining--ok]="isComplete"
+            [class.weight__remaining--over]="isOver"
+            aria-hidden="true"
+          >
+            @if (isOver) {
+              {{ -remaining }} zu viel
+            } @else if (isComplete) {
+              0 verfuegbar
+            } @else {
+              noch {{ remaining }} verfuegbar
+            }
+          </span>
         </div>
 
         <div class="weight__bar" aria-hidden="true">

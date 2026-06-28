@@ -230,6 +230,22 @@
   color: var(--color-text-muted);
 }
 
+.weight__remaining {
+  font-size: 0.78rem;
+  font-weight: 600;
+  white-space: nowrap;
+  color: var(--color-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.weight__remaining--ok {
+  color: var(--color-success-strong);
+}
+
+.weight__remaining--over {
+  color: var(--color-error);
+}
+
 .weight__bar {
   grid-area: bar;
   height: 5px;
