@@ -1,5 +1,6 @@
-import { AppScenario, Criterion } from '../models/survey.model';
 
+import { AppScenario, Criterion } from '../models/survey.model';
+ 
 /**
  * Angaben zur Bachelorarbeit fuer den Kopfbereich (Impressum).
  * Bei Bedarf hier zentral anpassbar.
@@ -12,10 +13,14 @@ export const THESIS = {
   institution: 'Steinbeis-Hochschule',
   company: 'Koerber AG'
 } as const;
-
+ 
 /**
  * Die sieben Bewertungskriterien fuer die Framework-Auswahl
  * (Reihenfolge und Texte entsprechen der Excel-Vorlage).
+ *
+ * Hinweis zu scaleHint: Die Anker (schwach / mittel / stark) sind eine
+ * Einordnung der moeglichen Framework-Auspraegung, KEINE Aufgabe fuer die
+ * Experten. Bewertet wird in diesem Survey die Gewichtung der Kriterien.
  */
 export const CRITERIA: readonly Criterion[] = [
   {
@@ -26,12 +31,14 @@ export const CRITERIA: readonly Criterion[] = [
       'Anforderungen. Stichworte: eigene Bausteine, fertige Bibliotheken, anspruchsvolle ' +
       'Logik und Leistung auch bei vielen Nutzern/Daten.',
     scaleHint:
-      '1 – Nur Standardbausteine nutzbar; individuelle Geschaeftslogik und eigene Komponenten ' +
-      'kaum umsetzbar; nicht fuer groessere Daten- und Nutzerzahlen ausgelegt. · ' +
-      '5 – Grossteil der Anforderungen umsetzbar; Spezialfaelle nur ueber Workarounds; ' +
+      'Zur Einordnung – so kann ein Framework bei diesem Kriterium abschneiden ' +
+      '(von schwach bis stark): ' +
+      'schwach – Nur Standardbausteine nutzbar; individuelle Geschaeftslogik und eigene ' +
+      'Komponenten kaum umsetzbar; nicht fuer groessere Daten- und Nutzerzahlen ausgelegt. · ' +
+      'mittel – Grossteil der Anforderungen umsetzbar; Spezialfaelle nur ueber Workarounds; ' +
       'Skalierbarkeit mit Einschraenkungen gegeben. · ' +
-      '10 – Praktisch jede Anforderung nativ umsetzbar (externe Bibliotheken, eigene Komponenten, ' +
-      'komplexe Logik); frei skalierbar.'
+      'stark – Praktisch jede Anforderung nativ umsetzbar (externe Bibliotheken, eigene ' +
+      'Komponenten, komplexe Logik); frei skalierbar.'
   },
   {
     id: 'sap-integration',
@@ -40,13 +47,15 @@ export const CRITERIA: readonly Criterion[] = [
       'Wie nahtlos und mit wie wenig Eigenaufwand sich die App an SAP koppelt: ' +
       'Daten (OData), Login/Berechtigungen und Einbettung in die SAP-Oberflaeche.',
     scaleHint:
-      '1 – Keine Kopplungsdimension nativ unterstuetzt; Datenanbindung, Authentifizierung ' +
-      'und Einbettung vollstaendig ueber Eigenentwicklung. · ' +
-      '5 – OData-Anbindung ueber offizielle Bibliotheken und zentrale SAP-Authentifizierung ' +
-      'nutzbar; Berechtigungskonzept mit Zusatzaufwand. · ' +
-      '10 – Alle drei Integrationsdimensionen werden ohne nennenswerten Zusatzaufwand erfuellt: ' +
-      'native OData-Anbindung, automatische Uebernahme von SSO und Berechtigungskonzept sowie ' +
-      'vollwertige Einbettung in die SAP-Oberflaeche.'
+      'Zur Einordnung – so kann ein Framework bei diesem Kriterium abschneiden ' +
+      '(von schwach bis stark): ' +
+      'schwach – Keine Kopplungsdimension nativ unterstuetzt; Datenanbindung, ' +
+      'Authentifizierung und Einbettung vollstaendig ueber Eigenentwicklung. · ' +
+      'mittel – OData-Anbindung ueber offizielle Bibliotheken und zentrale ' +
+      'SAP-Authentifizierung nutzbar; Berechtigungskonzept mit Zusatzaufwand. · ' +
+      'stark – Alle drei Integrationsdimensionen werden ohne nennenswerten Zusatzaufwand ' +
+      'erfuellt: native OData-Anbindung, automatische Uebernahme von SSO und Berechtigungskonzept ' +
+      'sowie vollwertige Einbettung in die SAP-Oberflaeche.'
   },
   {
     id: 'benutzeroberflaeche',
@@ -54,11 +63,13 @@ export const CRITERIA: readonly Criterion[] = [
     description:
       'Bedienbarkeit im Arbeitsalltag (UX) fuer die operativen Nutzer und Design der Anwendung',
     scaleHint:
-      '1 – Umstaendliche, ineffiziente Bedienung mit hoher Einarbeitungshuerde; ' +
+      'Zur Einordnung – so kann ein Framework bei diesem Kriterium abschneiden ' +
+      '(von schwach bis stark): ' +
+      'schwach – Umstaendliche, ineffiziente Bedienung mit hoher Einarbeitungshuerde; ' +
       'Gestaltung starr an ein Designsystem gebunden, kein eigenes Erscheinungsbild moeglich. · ' +
-      '5 – Solide Bedienung; Corporate Design im Rahmen des Designsystems anpassbar ' +
+      'mittel – Solide Bedienung; Corporate Design im Rahmen des Designsystems anpassbar ' +
       '(Farben, Logo, Typografie), darueber hinaus gebunden. · ' +
-      '10 – Unmittelbar intuitive, hocheffiziente Bedienung; vollstaendige gestalterische ' +
+      'stark – Unmittelbar intuitive, hocheffiziente Bedienung; vollstaendige gestalterische ' +
       'Freiheit bis hin zu eigenen Komponenten.'
   },
   {
@@ -68,9 +79,13 @@ export const CRITERIA: readonly Criterion[] = [
       'Aufwand fuer Anpassungen, Erweiterungen und Pflege nach dem Go-Live (Produktivstart). ' +
       'Wichtig: sauberer, modularer Aufbau und gute Testbarkeit.',
     scaleHint:
-      '1 – Aenderungen nach Go-Live riskant und aufwaendig; geringe Modularitaet, kaum testbar. · ' +
-      '5 – Erweiterungen mit vertretbarem Aufwand; teilweise modular und testbar. · ' +
-      '10 – Hoch modular und gut testbar; Erweiterungen schnell, sicher und mit geringem Folgeaufwand.'
+      'Zur Einordnung – so kann ein Framework bei diesem Kriterium abschneiden ' +
+      '(von schwach bis stark): ' +
+      'schwach – Aenderungen nach Go-Live riskant und aufwaendig; geringe Modularitaet, ' +
+      'kaum testbar. · ' +
+      'mittel – Erweiterungen mit vertretbarem Aufwand; teilweise modular und testbar. · ' +
+      'stark – Hoch modular und gut testbar; Erweiterungen schnell, sicher und mit geringem ' +
+      'Folgeaufwand.'
   },
   {
     id: 'time-to-market',
@@ -79,11 +94,13 @@ export const CRITERIA: readonly Criterion[] = [
       'Aufwand und Zeit bis die App produktiv nutzbar ist (Time-to-Market = Zeit bis zum ' +
       'Einsatz).',
     scaleHint:
-      '1 – Sehr lange bis zur Produktivsetzung; steile Lernkurve, kaum Beschleunigung ' +
+      'Zur Einordnung – so kann ein Framework bei diesem Kriterium abschneiden ' +
+      '(von schwach bis stark): ' +
+      'schwach – Sehr lange bis zur Produktivsetzung; steile Lernkurve, kaum Beschleunigung ' +
       'durch Vorlagen oder Generatoren. · ' +
-      '5 – Mittlerer Initialaufwand; brauchbare Vorlagen und Tooling beschleunigen die ' +
+      'mittel – Mittlerer Initialaufwand; brauchbare Vorlagen und Tooling beschleunigen die ' +
       'Entwicklung, Einarbeitung in vertretbarem Rahmen. · ' +
-      '10 – Sehr schnell produktiv; geringe Lernkurve, starke Generatoren/Vorlagen ' +
+      'stark – Sehr schnell produktiv; geringe Lernkurve, starke Generatoren/Vorlagen ' +
       'ermoeglichen kurze Time-to-Market.'
   },
   {
@@ -93,9 +110,13 @@ export const CRITERIA: readonly Criterion[] = [
       'Gesamtkosten ueber die gesamte Nutzungsdauer (Total Cost of Ownership): Lizenzen, ' +
       'Betrieb und Pflege – inkl. Verfuegbarkeit von geeignetem Fachpersonal.',
     scaleHint:
-      '1 – Hohe Gesamtkosten (Lizenz, Hosting, Pflege); benoetigtes Fachpersonal knapp und teuer. · ' +
-      '5 – Moderate Gesamtkosten; Fachpersonal mit vertretbarem Aufwand verfuegbar oder aufbaubar. · ' +
-      '10 – Minimale Gesamtkosten; guenstig zu betreiben und zu besetzen.'
+      'Zur Einordnung – so kann ein Framework bei diesem Kriterium abschneiden ' +
+      '(von schwach bis stark): ' +
+      'schwach – Hohe Gesamtkosten (Lizenz, Hosting, Pflege); benoetigtes Fachpersonal knapp ' +
+      'und teuer. · ' +
+      'mittel – Moderate Gesamtkosten; Fachpersonal mit vertretbarem Aufwand verfuegbar oder ' +
+      'aufbaubar. · ' +
+      'stark – Minimale Gesamtkosten; guenstig zu betreiben und zu besetzen.'
   },
   {
     id: 'zukunftssicherheit',
@@ -104,12 +125,15 @@ export const CRITERIA: readonly Criterion[] = [
       'Langfristige Verlaesslichkeit der Technik: regelmaessige Updates, klare Roadmap ' +
       '(geplante Weiterentwicklung), Wartungszusagen sowie Verbreitung und aktive Community.',
     scaleHint:
-      '1 – Abgekuendigt oder stagnierend; unklare Roadmap, schrumpfende Community. Migration droht. · ' +
-      '5 – Stabil gepflegt, solide Roadmap; Marktanteil und Community konstant. · ' +
-      '10 – Aktiv weiterentwickelt, langfristige Hersteller-Zusage, wachsende Community.'
+      'Zur Einordnung – so kann ein Framework bei diesem Kriterium abschneiden ' +
+      '(von schwach bis stark): ' +
+      'schwach – Abgekuendigt oder stagnierend; unklare Roadmap, schrumpfende Community. ' +
+      'Migration droht. · ' +
+      'mittel – Stabil gepflegt, solide Roadmap; Marktanteil und Community konstant. · ' +
+      'stark – Aktiv weiterentwickelt, langfristige Hersteller-Zusage, wachsende Community.'
   }
 ];
-
+ 
 /**
  * Die vier zu bewertenden Anwendungsfaelle (Apps/Szenarien).
  * Pro Anwendungsfall werden 100 Punkte auf die sieben Kriterien verteilt.
