@@ -7,7 +7,7 @@ import { AppScenario, Criterion } from '../models/survey.model';
  */
 export const THESIS = {
   title: 'Expertenbefragung zur Gewichtung von Bewertungskriterien',
-  thesisTitle: 'Frontend-Framework-Auswahl fuer SAP-Logistikanwendungen',
+  thesisTitle: 'Entwicklung eines Bewertungskatalogs zur Auswahl geeigneter Webframeworks für SAP gestützte Logistikprozesse',
   type: 'Bachelorarbeit',
   author: 'Dominik Geringer',
   institution: 'Steinbeis-Hochschule',
